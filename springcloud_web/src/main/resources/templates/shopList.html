@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)http://test.happymmall.com/list.html?keyword=%E6%89%8B%E6%9C%BA -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta http-equiv="x-ua-compatible" content="ie=edge"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="keywords" content="MMall,电商系统,网购平台,慕课三剑客,教学视频,前端开发,后端开发,React,SSM,Java,权限系统,分布式,高并发,毕业设计,毕设,代码"> <meta name="description" content="MMall电商平台教学，最火的电商系统开发教学视频，囊括前后端多个课程，一线企业讲师亲自授课，慕课三剑客带你成为IT行业大牛。"> <link rel="dns-prefetch" href="http://s.happymmall.com/"> <link rel="dns-prefetch" href="http://cdn.bootcss.com/"> <script src="/page/hm.js"></script><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?bc210cd22928076d28296716d9dfcf01";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script>
+        <title>商品列表--MMall电商平台</title>
+    <link rel="shortcut icon" href="http://s.happymmall.com/mmall_fe/dist/favicon.ico"><link href="/page/common.css" rel="stylesheet"><link href="/page/list.css" rel="stylesheet"></head>
+    <body>
+        <div class="notice-con"> <div class="w"> </div> </div> <div class="site-nav"> <div class="w"> <div class="user-info"> <span class="site-user not-login" style="display: inline;"> <span class="link link-login">登录</span> <span class="link link-register" href="./register.html">注册</span> </span> <span class="site-user login"> <span class="link-text">欢迎，<span class="username"></span></span> <span class="link link-logout">退出</span> </span> </div> <ul class="nav-list"> <li class="nav-item"> <a class="link" href="http://test.happymmall.com/cart.html"> <i class="fa fa-shopping-cart"></i> 购物车(<span class="cart-count">0</span>)</a> </li> <li class="nav-item"> <a class="link" href="http://test.happymmall.com/order-list.html">我的订单</a> </li> <li class="nav-item"> <a class="link" href="http://test.happymmall.com/user-center.html">我的MMall</a> </li> <li class="nav-item"> <a class="link" href="http://test.happymmall.com/about.html">关于MMall</a> </li> </ul> </div> </div>
+
+        <div class="header"> <div class="w"> <a class="logo" href="http://test.happymmall.com/index.html">MMall</a> <div class="search-form"> <input class="search-input" id="search-input" placeholder="请输入商品名称">
+			<button class="search-btn" id="searchBtn">搜索</button> </div> </div> </div>
+        <div class="crumb">
+            <div class="w">
+                <div class="crumb-list">
+                    <a href="http://test.happymmall.com/index.html" class="crumb-item">MMall</a>
+                    <span>&gt;</span>
+                    <span class="crumb-item">商品列表</span>
+                </div>
+            </div>
+        </div>
+        <div class="list-wrap w">
+            <div class="row">
+                <div style="width: 100%;margin-left: 100px;margin-top: 70px">
+                    <button class="btnSortAss" type="button" onclick="sortPriceAsc(1)" id="priceAsc">价格↑</button>
+                    <button class="btnSortAss" style="display: none;" type="button" onclick="sortPriceDesc(2)" id="priceDesc">价格↓</button>
+                    <input type="text" style="display: none" id="sortPrice" />
+                    <input type="text" class="sortPrice" placeholder="￥" size="8" id="startPrice">-<input type="text" class="sortPrice" size="8" placeholder="￥" id="endPrice">
+                    <button type="button" id="searchPrice" style="width: 50px;height: 30px;border: 5px;border-radius: 5px;background-color: #f10215;font-weight: bold;color: white" >确定</button>
+                </div>
+            </div>
+            <!-- list容器 -->
+            <ul class="p-list-con">
+                <li class="p-item">
+                    <div class="p-img-con" id="J_goodsList" ></div>
+                </li>
+            </ul>
+            <!-- 分页容器 -->
+            <div class="zxf_pagediv" style="vertical-align: center; "></div>
+        </div>
+        <div class="footer"> <div class="w"> <div class="links"> <a target="_blank" class="link" href="https://coding.imooc.com/">慕课网实战</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/198337">Rosen主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/t/2705746">Geely主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/5980627">Jimin主页</a> </div> <p class="copyright"> Copyright © 2018 happymmall.com All Rights Reserved </p> </div> </div> \
+        <script src="/page/jquery.js"></script>
+        <script type="text/javascript" src="/page/base.js"></script>
+        <script type="text/javascript" src="/page/common.js"></script>
+        <script src="/js/page/zxf_page.js"></script>
+        <link rel="stylesheet" href="/js/page/zxf_page.css">
+    </body>
+<script>
+    $(function () {
+        elasticSearch(1,10)
+    })
+
+    $("#searchBtn").click(function(){
+        $("#sortPrice").val(null);
+        $("#startPrice").val(null);
+        $("#endPrice").val(null);
+        elasticSearch(1,10)
+    })
+
+    $("#searchPrice").click(function(){
+        $("#sortPrice").val(null);
+        elasticSearch(1,10)
+    })
+
+
+    function elasticSearch(page,rows){
+        var info = $("#search-input").val();
+        var sortPrice = $("#sortPrice").val();
+        var startPrice = $("#startPrice").val();
+        var endPrice = $("#endPrice").val();
+        $.ajax({
+            url:'../queryProduct',
+            type:'GET',
+            data:{
+                page:page,
+                rows:rows,
+                info:info,
+                sortPrice:sortPrice,
+                startPrice:startPrice,
+                endPrice:endPrice
+            },
+            dataType:'json',
+            success:function(result){
+
+                var data = result.rows
+                var t = "";
+                for (var i = 0; i <data.length ; i++) {
+                    t += "<li class='p-item' style='float:left'>"
+                    t += "<div class='p-img-con'>"
+                    t += "<a class='link' target='blank' href='"+data[i].url+"?id="+data[i].id+"'>"
+                    t += "<img class='p-img' src='"+data[i].img+"'>"
+                    t += "</a>"
+                    t += "</div>"
+                    t += "<div class='p-price-con'>"
+                    t += "<span class='p-price'>￥"+data[i].price+"</span>"
+                    t += "</div>"
+                    t += "<div class='p-name-con'>"
+                    t += "<a href='"+data[i].url+"?id="+data[i].id+"' target='_blank' class='p-name'>"+data[i].name+"</a>"
+                    t += "</div>"
+                    t += "</li>"
+                }
+                $("#J_goodsList").html(t)
+                var total = result.total
+                var pageSize = Math.ceil(total/rows)
+                $(".zxf_pagediv").createPage({
+                    pageNum:pageSize,
+                    backfun: function(e){
+                        page = e.current//回调
+                        rows = 10;
+                        elasticSearch2(page,rows)
+                    }
+                })
+            }
+        })
+    }
+
+    function elasticSearch2(page,rows){
+        var info = $("#search-input").val();
+        var sortPrice = $("#sortPrice").val();
+        var startPrice = $("#startPrice").val();
+        var endPrice = $("#endPrice").val();
+        $.ajax({
+            url:'../queryProduct',
+            type:'GET',
+            data:{
+                page:page,
+                rows:rows,
+                info:info,
+                sortPrice:sortPrice,
+                startPrice:startPrice,
+                endPrice:endPrice
+
+            },
+            dataType:'json',
+            success:function(result){
+
+                var data = result.rows
+                var t = "";
+                for (var i = 0; i <data.length ; i++) {
+                    t += "<li class='p-item' style='float: left'>"
+                    t += "<div class='p-img-con'>"
+                    t += "<a class='link' target='blank' href='"+data[i].url+"?id="+data[i].id+"'>"
+                    t += "<img class='p-img' src='"+data[i].img+"'>"
+                    t += "</a>"
+                    t += "</div>"
+                    t += "<div class='p-price-con'>"
+                    t += "<span class='p-price'>￥"+data[i].price+"</span>"
+                    t += "</div>"
+                    t += "<div class='p-name-con'>"
+                    t += "<a href='"+data[i].url+"?id="+data[i].id+"' target='_blank' class='p-name'>"+data[i].name+"</a>"
+                    t += "</div>"
+                    t += "</li>"
+                }
+                $("#J_goodsList").html(t)
+            }
+        })
+    }
+
+    function sortPriceAsc(sortPrice){
+        $("#sortPrice").val(sortPrice);+
+            elasticSearch(1,10)
+        $("#priceAsc").attr("style","display:none");
+        $("#priceDesc").attr("style","display:inline")
+    }
+
+
+    function sortPriceDesc(sortPrice){
+        $("#sortPrice").val(sortPrice);
+        elasticSearch(1,10)
+        $("#priceAsc").attr("style","display:inline");
+        $("#priceDesc").attr("style","display:none")
+    }
+
+
+
+</script>
+</html>

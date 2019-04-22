@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.ShopMapper">
+
+
+    <!--<select id="queryProductInfo" parameterType="int" resultType="com.jk.pojo.ProductInfo">
+        SELECT s.id as productId,s.type,s.info,s.price,s.img FROM t_shop s WHERE s.id = #{value}
+    </select>-->
+
+
+</mapper>
