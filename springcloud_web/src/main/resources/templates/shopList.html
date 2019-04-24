@@ -12,7 +12,7 @@
         <div class="crumb">
             <div class="w">
                 <div class="crumb-list">
-                    <a href="http://test.happymmall.com/index.html" class="crumb-item">MMall</a>
+                    <a href="../page/toHomePage" class="crumb-item">MMall</a>
                     <span>&gt;</span>
                     <span class="crumb-item">商品列表</span>
                 </div>
@@ -30,19 +30,28 @@
             </div>
             <!-- list容器 -->
             <ul class="p-list-con">
-                <li class="p-item">
-                    <div class="p-img-con" id="J_goodsList" ></div>
-                </li>
+
             </ul>
             <!-- 分页容器 -->
             <div class="zxf_pagediv" style="vertical-align: center; "></div>
         </div>
-        <div class="footer"> <div class="w"> <div class="links"> <a target="_blank" class="link" href="https://coding.imooc.com/">慕课网实战</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/198337">Rosen主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/t/2705746">Geely主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/5980627">Jimin主页</a> </div> <p class="copyright"> Copyright © 2018 happymmall.com All Rights Reserved </p> </div> </div> \
+        <div class="footer"> <div class="w"> <div class="links"> <a target="_blank" class="link" href="https://coding.imooc.com/">慕课网实战</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/198337">Rosen主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/t/2705746">Geely主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/5980627">Jimin主页</a> </div> <p class="copyright"> Copyright © 2018 happymmall.com All Rights Reserved </p> </div> </div>
         <script src="/page/jquery.js"></script>
         <script type="text/javascript" src="/page/base.js"></script>
         <script type="text/javascript" src="/page/common.js"></script>
         <script src="/js/page/zxf_page.js"></script>
         <link rel="stylesheet" href="/js/page/zxf_page.css">
+        <style>
+            #shopping-chart{
+                width: 170px;
+                height: 40px;
+                border: 5px;
+                border-radius: 5px;
+                background-color: #f10215;
+                font-weight: bold;
+                color: white
+            }
+        </style>
     </body>
 <script>
     $(function () {
@@ -63,7 +72,7 @@
 
 
     function elasticSearch(page,rows){
-        var info = $("#search-input").val();
+        var name = $("#search-input").val();
         var sortPrice = $("#sortPrice").val();
         var startPrice = $("#startPrice").val();
         var endPrice = $("#endPrice").val();
@@ -73,7 +82,7 @@
             data:{
                 page:page,
                 rows:rows,
-                info:info,
+                name:name,
                 sortPrice:sortPrice,
                 startPrice:startPrice,
                 endPrice:endPrice
@@ -84,7 +93,7 @@
                 var data = result.rows
                 var t = "";
                 for (var i = 0; i <data.length ; i++) {
-                    t += "<li class='p-item' style='float:left'>"
+                    t += "<li class='p-item'>"
                     t += "<div class='p-img-con'>"
                     t += "<a class='link' target='blank' href='"+data[i].url+"?id="+data[i].id+"'>"
                     t += "<img class='p-img' src='"+data[i].img+"'>"
@@ -94,11 +103,17 @@
                     t += "<span class='p-price'>￥"+data[i].price+"</span>"
                     t += "</div>"
                     t += "<div class='p-name-con'>"
-                    t += "<a href='"+data[i].url+"?id="+data[i].id+"' target='_blank' class='p-name'>"+data[i].name+"</a>"
+                    t += "<span class='p-name' style='font-size:12px'>"+data[i].name+"</span>"
+                    t += "</div>"
+                    t += "<div class='p-info-con'>"
+                    t += "<span class='p-info'>"+data[i].info+"</span>"
+                    t += "</div>"
+                    t += "<div>"
+                    t += "<span><button class='glyphicon glyphicon-shopping-cart' id='shopping-chart'  onclick='addShoppingCart(\"+data[i].id+\")'>加入购物车</button></span>"
                     t += "</div>"
                     t += "</li>"
                 }
-                $("#J_goodsList").html(t)
+                $(".p-list-con").html(t)
                 var total = result.total
                 var pageSize = Math.ceil(total/rows)
                 $(".zxf_pagediv").createPage({
@@ -114,7 +129,7 @@
     }
 
     function elasticSearch2(page,rows){
-        var info = $("#search-input").val();
+        var name = $("#search-input").val();
         var sortPrice = $("#sortPrice").val();
         var startPrice = $("#startPrice").val();
         var endPrice = $("#endPrice").val();
@@ -124,7 +139,7 @@
             data:{
                 page:page,
                 rows:rows,
-                info:info,
+                name:name,
                 sortPrice:sortPrice,
                 startPrice:startPrice,
                 endPrice:endPrice
@@ -136,7 +151,7 @@
                 var data = result.rows
                 var t = "";
                 for (var i = 0; i <data.length ; i++) {
-                    t += "<li class='p-item' style='float: left'>"
+                    t += "<li class='p-item'>"
                     t += "<div class='p-img-con'>"
                     t += "<a class='link' target='blank' href='"+data[i].url+"?id="+data[i].id+"'>"
                     t += "<img class='p-img' src='"+data[i].img+"'>"
@@ -146,11 +161,17 @@
                     t += "<span class='p-price'>￥"+data[i].price+"</span>"
                     t += "</div>"
                     t += "<div class='p-name-con'>"
-                    t += "<a href='"+data[i].url+"?id="+data[i].id+"' target='_blank' class='p-name'>"+data[i].name+"</a>"
+                    t += "<span class='p-name' style='font-size:12px'>"+data[i].name+"</span>"
+                    t += "</div>"
+                    t += "<div class='p-info-con'>"
+                    t += "<span class='p-info'>"+data[i].info+"</span>"
+                    t += "</div>"
+                    t += "<div>"
+                    t += "<span><button class='glyphicon glyphicon-shopping-cart' id='shopping-chart'  onclick='addShoppingCart(\"+data[i].id+\")'>加入购物车</button></span>"
                     t += "</div>"
                     t += "</li>"
                 }
-                $("#J_goodsList").html(t)
+                $(".p-list-con").html(t)
             }
         })
     }
@@ -171,6 +192,21 @@
     }
 
 
+    function addShoppingCart(id){
+        var count = 1;
+        ajax({
+            url:'../addShoppingCart',
+            type:'get',
+            data:{
+                id:id,
+                count:count
+            },
+            success:function(){
+                alert("成功加入购物车");
+            }
+        })
+
+    }
 
 </script>
 </html>

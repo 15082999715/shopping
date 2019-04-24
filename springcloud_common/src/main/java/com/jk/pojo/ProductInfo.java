@@ -2,9 +2,8 @@ package com.jk.pojo;
 
 import java.io.Serializable;
 
-public class ProductInfo  {
-    //implements Serializable
-    //private static final long serialVersionUID = -5711753525402785207L;
+public class ProductInfo  implements Serializable{
+    private static final long serialVersionUID = -5711753525402785207L;
     private String id;
     private Integer productId;
     private String type;

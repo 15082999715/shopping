@@ -11,5 +11,7 @@ public interface ShopMapper {
     List<User> queryList();
 
 
-    //ProductInfo queryProductInfo(Integer productId);
+    ProductInfo queryProductInfo(Integer productId);
+
+    User findUserByUserName(String username);
 }

@@ -11,6 +11,9 @@ public interface ShopServiceApi {
     @GetMapping("queryList")
     List<User> queryList();
 
-    /*@GetMapping("queryCartProduct")
+    @GetMapping("findUserByUserName")
+    User findUserByUserName(String username);
+
+   /* @GetMapping("queryCartProduct")
     List<ProductInfo> queryCartProduct();*/
 }

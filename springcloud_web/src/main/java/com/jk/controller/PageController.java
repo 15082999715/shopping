@@ -1,5 +1,6 @@
 package com.jk.controller;
 
+import org.elasticsearch.discovery.zen.PublishClusterStateAction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,7 +22,7 @@ public class PageController {
      * @return
      */
     @RequestMapping("toRegister")
-    public String toList(){
+    public String toRegister(){
         return "reg";
     }
 
@@ -52,6 +53,19 @@ public class PageController {
         return "shopCart";
     }
 
+    /**
+     * 跳转到list页面
+     * @return
+     */
+    @RequestMapping("toList")
+    public String toList(){
+        return "list";
+    }
 
+
+    @RequestMapping("toShoppingChart")
+    public String toShoppingChart(){
+        return "shoppingChart";
+    }
 
 }

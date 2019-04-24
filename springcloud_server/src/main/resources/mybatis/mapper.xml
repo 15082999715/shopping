@@ -2,10 +2,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jk.mapper.ShopMapper">
 
-
+    <resultMap type="com.jk.ws.pojo.UserBean" id="userMap">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+    </resultMap>
     <!--<select id="queryProductInfo" parameterType="int" resultType="com.jk.pojo.ProductInfo">
-        SELECT s.id as productId,s.type,s.info,s.price,s.img FROM t_shop s WHERE s.id = #{value}
+        SELECT s.id as productId,s.name,s.info,s.price,s.img FROM t_shop s WHERE s.id = #{value}
     </select>-->
 
+    <select id="findUserByLoginNumber" parameterType="string" resultMap="userMap">
+		select id,username,password  from user  where username=#{username}
+	</select>
 
 </mapper>

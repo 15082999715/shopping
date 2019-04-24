@@ -14,15 +14,17 @@
                         <i class="fa fa-minus-circle err-icon"></i>
                         <p class="err-msg">Error</p>
                     </div>
-                    <div class="user-item">
-                        <label class="user-label" for="username"><i class="fa fa-user"></i></label>
-                        <input type="text" class="user-content" id="username" placeholder="请输入用户名" autocomplete="off">
-                    </div>
-                    <div class="user-item">
-                        <label class="user-label" for="password"><i class="fa fa-lock"></i></label>
-                        <input type="password" class="user-content" id="password" placeholder="请输入密码">
-                    </div>
-                    <a class="user-btn" id="submit">登录</a>
+                    <form id="loginForm" method="post">
+                        <div class="user-item">
+                            <label class="user-label" for="username"><i class="fa fa-user"></i></label>
+                            <input type="text" class="user-content" id="username" placeholder="请输入用户名" autocomplete="off">
+                        </div>
+                        <div class="user-item">
+                            <label class="user-label" for="password"><i class="fa fa-lock"></i></label>
+                            <input type="password" class="user-content" id="password" placeholder="请输入密码">
+                        </div>
+                    </form>
+                    <a class="user-btn" id="submit" onclick="login()">登录</a>
                     <div class="link-item">
                         <a class="link pass-forget" href="http://test.happymmall.com/pass-reset.html" target="_blank">忘记密码</a>
                         <a class="link register" href="http://test.happymmall.com/register.html" target="_blank">免费注册</a>
@@ -31,6 +33,23 @@
             </div>
         </div>
         <div class="footer"> <div class="w"> <div class="links"> <a target="_blank" class="link" href="https://coding.imooc.com/">慕课网实战</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/198337">Rosen主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/t/2705746">Geely主页</a> | <a target="_blank" class="link" href="https://www.imooc.com/u/5980627">Jimin主页</a> </div> <p class="copyright"> Copyright © 2018 happymmall.com All Rights Reserved </p> </div> </div> <script src="/page/jquery.js"></script>
-    <script type="text/javascript" src="/page/base.js"></script><script type="text/javascript" src="/page/common.js"></script><script type="text/javascript" src="/page/login.js"></script>
+        <script type="text/javascript" src="/page/base.js"></script>
+        <script type="text/javascript" src="/page/common.js"></script>
+        <script type="text/javascript" src="/page/login.js"></script>
+</body>
+<script>
+    //登录
+    function login(){
+        $("#loginForm").form("submit",{
+            url:"../login",
+            success:function(data){
+                $.messager.alert("提示",data,"info");
+                if(data=="登录成功"){
+                    location.href="../page/toHomePage";
+                }
+            }
+        })
+    }
 
-</body></html>
+</script>
+</html>

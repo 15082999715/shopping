@@ -27,14 +27,19 @@ public class ShopController implements ShopServiceApi {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    //@Autowired
-    //private RedisTemplate redisTemplate;
+    /*@Autowired
+    private RedisTemplate redisTemplate;*/
 
 
 
     @Override
     public List<User> queryList() {
         return shopMapper.queryList();
+    }
+
+    @Override
+    public User findUserByUserName(String username) {
+        return shopMapper.findUserByUserName(username);
     }
 
     /*@Override
